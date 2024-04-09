@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "order_histories",
+  "info": {
+    "singularName": "order-history",
+    "pluralName": "order-histories",
+    "displayName": "OrderHistory",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "orders": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::oder.oder",
+      "mappedBy": "order_history"
+    },
+    "address": {
+      "type": "text"
+    },
+    "receiver": {
+      "type": "string"
+    },
+    "phoneNumber": {
+      "type": "text"
+    }
+  }
+}

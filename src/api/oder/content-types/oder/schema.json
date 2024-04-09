@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "oders",
+  "info": {
+    "singularName": "oder",
+    "pluralName": "oders",
+    "displayName": "Order",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "price": {
+      "type": "biginteger"
+    },
+    "count": {
+      "type": "biginteger"
+    },
+    "name": {
+      "type": "string"
+    },
+    "size": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string"
+    },
+    "order_history": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::order-history.order-history",
+      "inversedBy": "orders"
+    }
+  }
+}
