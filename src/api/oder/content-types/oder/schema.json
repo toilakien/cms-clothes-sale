@@ -12,26 +12,20 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "price": {
-      "type": "biginteger"
-    },
-    "count": {
-      "type": "biginteger"
-    },
-    "name": {
+    "receiver": {
       "type": "string"
     },
-    "size": {
+    "phoneNumber": {
       "type": "string"
     },
-    "color": {
+    "address": {
       "type": "string"
     },
-    "order_history": {
+    "products": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::order-history.order-history",
-      "inversedBy": "orders"
+      "relation": "oneToMany",
+      "target": "api::product.product",
+      "mappedBy": "order"
     }
   }
 }

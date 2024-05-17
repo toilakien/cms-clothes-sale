@@ -814,6 +814,39 @@ export interface ApiBlogBlog extends Schema.CollectionType {
   };
 }
 
+export interface ApiFeedbackFeedback extends Schema.CollectionType {
+  collectionName: 'feedbacks';
+  info: {
+    singularName: 'feedback';
+    pluralName: 'feedbacks';
+    displayName: 'Feedback';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    email: Attribute.Email;
+    phoneNumber: Attribute.String;
+    content: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::feedback.feedback',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::feedback.feedback',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiOderOder extends Schema.CollectionType {
   collectionName: 'oders';
   info: {
@@ -826,15 +859,13 @@ export interface ApiOderOder extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    price: Attribute.BigInteger;
-    count: Attribute.BigInteger;
-    name: Attribute.String;
-    size: Attribute.String;
-    color: Attribute.String;
-    order_history: Attribute.Relation<
+    receiver: Attribute.String;
+    phoneNumber: Attribute.String;
+    address: Attribute.String;
+    products: Attribute.Relation<
       'api::oder.oder',
-      'manyToOne',
-      'api::order-history.order-history'
+      'oneToMany',
+      'api::product.product'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -842,44 +873,6 @@ export interface ApiOderOder extends Schema.CollectionType {
     createdBy: Attribute.Relation<'api::oder.oder', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::oder.oder', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
-export interface ApiOrderHistoryOrderHistory extends Schema.CollectionType {
-  collectionName: 'order_histories';
-  info: {
-    singularName: 'order-history';
-    pluralName: 'order-histories';
-    displayName: 'OrderHistory';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    orders: Attribute.Relation<
-      'api::order-history.order-history',
-      'oneToMany',
-      'api::oder.oder'
-    >;
-    address: Attribute.Text;
-    receiver: Attribute.String;
-    phoneNumber: Attribute.Text;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::order-history.order-history',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::order-history.order-history',
-      'oneToOne',
-      'admin::user'
-    > &
       Attribute.Private;
   };
 }
@@ -907,6 +900,11 @@ export interface ApiProductProduct extends Schema.CollectionType {
     color: Attribute.Integer;
     description: Attribute.Text;
     discount: Attribute.BigInteger;
+    order: Attribute.Relation<
+      'api::product.product',
+      'manyToOne',
+      'api::oder.oder'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -944,8 +942,8 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
       'api::blog.blog': ApiBlogBlog;
+      'api::feedback.feedback': ApiFeedbackFeedback;
       'api::oder.oder': ApiOderOder;
-      'api::order-history.order-history': ApiOrderHistoryOrderHistory;
       'api::product.product': ApiProductProduct;
     }
   }

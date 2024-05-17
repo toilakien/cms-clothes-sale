@@ -64,6 +64,12 @@
     },
     "discount": {
       "type": "biginteger"
+    },
+    "order": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::oder.oder",
+      "inversedBy": "products"
     }
   }
 }
